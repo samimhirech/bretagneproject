@@ -4,12 +4,10 @@
 \alias{stop_line}
 \title{stop_line}
 \usage{
-stop_line(line_id, destination)
+stop_line(route_id)
 }
 \arguments{
 \item{line_id}{is a string (the line_id)}
-
-\item{destination}{is a string (the destination)}
 }
 \value{
 the stops of a line
