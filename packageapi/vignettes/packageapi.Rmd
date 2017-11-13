@@ -1,0 +1,44 @@
+---
+title: "Connect with Brest Transportation API"
+author: "Sami Mhirech"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# The API
+
+This package was created to interect with a governemental API which broadcasts information about public transportation in the city of Brest, a beautiful city in the West of France. The information consists essentially in theorical measures and it also streams live data about public transportation. 
+
+## API Info
+
+The API name is "Données transports Brest Métropole" and it was created with the collaboration pf Bibus-Keolis Brest. It is an open API, so we did not need to ask for a key. The version of the API is 1.3 and it was put online on 10/27/2016.
+
+There is the link to access the documentation about this API. 
+([via](https://api.gouv.fr/api/brest.html))
+
+## Type of data
+
+The API provides different types of data: 
+- Statistical data : the version of the application, the name of all the stops, the name of all the lines, the stops of a line, all the lines crossing a stop, the name of the destinations.
+- Real time data : the nearest stops, the nearest stop on a line, the geographical position of the vehicles, the next departure times, the waiting time before next departure, the deviations and the perturbations.
+
+# The package
+
+After spending long hours in trying to understand the functioning of APIs and the way to connect to APIs using R, we decided to use the package `jsonlite` and in particular the function `fromJSON`. In fact, the Brest API allows us to have data in json, and this function is perfect to extract them. 
+
+## Stop_line
+
+This function gives us all the stops of a line. We just need to enter the `route_id` of the line as a parameter and you can get all the stops you can go to in a list of characters. You can find the route ids in the dataset we added the package whose name is `routes`.
+
+We found some difficulties in creating this function. Indeed, we had difficulties to figure out how the URLs were designed, essentially concerning the `trip_headsigns`. We used `gsub` and `paste` to create the URLs we wanted. We also find difficulties to manage our data (concatenate it, change data frames into lists, etc). 
+
+## Next_bus
+
+This function gives us three sentences. The first is about the next bus arrival time. The second is about the remaining time to wait. And the third is whether or not there is delay. The function asks the user about a first input, the route_id, then the user has to chose a destination within a list given by our function and finally the user has to chose a stop within a list. 
+
+We found difficulties in managing real time data. In fact, Brest is not a huge city, so public transportation ends early at night, so there was no more data after 8PM. Other difficulties were found in the creation of inputs asked to the user. In fact, we had not seen that in the R course, so we had to manage by googling quite a long time. 
+
